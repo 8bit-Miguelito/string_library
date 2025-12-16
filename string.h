@@ -10,8 +10,8 @@ string* my_str(char* s, const unsigned int cap);
 unsigned int length(string* s);
 bool empty(string* s);
 bool equal(string* a, string *b);
-void append(string* s);
-void at(string* s, unsigned int idx);
+bool c_equal(string* a, char* b);
+char at(string* s, unsigned int idx);
 char* get_string(string* s);
 void destroy(string* s);
 

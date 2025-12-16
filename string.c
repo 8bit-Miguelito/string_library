@@ -50,12 +50,38 @@ bool empty(string* s)
 {
     return s->length == 0;
 }
+
+//Checks if two strings are equal in elements and size;
+//Returns true if strings are equal
 bool equal(string* a, string *b)
+{
+    if (a->length != b->length) return false;
+
+    unsigned int i = 0;
+    while (a->str[i] != '\0' && b->str[i] != '\0')
+    {
+        if (a->str[i] != b->str[i]) return false;
+        i++;
+    }
+
+    if (a->str[i] == '\0' && b->str[i] == '\0')
+    {
+        return true;
+    }
+
+    return false;
+}
+
+//Same idea as equal method but compares a char array and a string type
+bool c_equal(string* a, char* b)
 {
     return false;
 }
-void append(string* s);
-void at(string* s, unsigned int idx);
+
+char at(string* s, const unsigned int idx)
+{
+    return s->str[idx];
+}
 
 char* get_string(string* s)
 {
