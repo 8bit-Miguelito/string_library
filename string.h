@@ -4,42 +4,61 @@
 #ifndef STRING_FILE_H
 #define STRING_FILE_H
 
+
 typedef struct //total 16 bytes with 4 bytes of padding
 {
-    char* string; //8 bytes
-    size_t capacity; //4 bytes 
+    char* str; //8 bytes
+    unsigned int capacity; //4 bytes 
 } string; 
 
-//Copy string into char array inside of struct
-string* new_string(char** str, size_t new_cap)
+string string_ctor(char* str, size_t new_cap)
 {
     size_t str_size = 0;
-    while (*str[str_size] != '\0')
+    char* copy_str = str;
+    while (copy_str[str_size] != '\0') str_size++;
+    
+    if (new_cap < str_size) 
     {
-        str_size++;
+        size_t offset = 0;
+        size_t rem = str_size % 10;
+        if (rem != 0)
+        {
+            offset += 10 - rem;
+        }
+        new_cap = str_size + offset;
     }
 
-    if (new_cap < str_size) return NULL;
-    string* new_str = (string*)malloc(sizeof(string));
-    if (!new_str) return NULL;
+    string new_string;
+    new_string.str = (char*)malloc(1 * new_cap);
+    new_string.capacity = new_cap;
 
-    new_str->capacity = new_cap;
-    new_str->string = (char*)malloc(sizeof(char) * new_str->capacity);
-    if (!(new_str->string)) return NULL;
-
-    for (size_t i = 0; i < new_str->capacity; i++)
+    for (size_t i = 0; i < new_string.capacity; i++)
     {
-        if (*str[i] == '\0') 
+        if (copy_str[i] == '\0')
         {
-            new_str->string[i] = '\0';
+            new_string.str[i] = '\0';
             break;
         }
-        new_str->string[i] = *str[i];
+        new_string.str[i] = copy_str[i];
     }
 
-    return new_str;
+    return new_string;
 }
 
+unsigned int str_len(string* this_str)
+{
+    if (this_str == NULL) return 0;
+
+    size_t sz = 0;
+    while(this_str->str[sz] != '\0') sz++;
+
+    return sz;
+}
+
+void clear(string* this_str)
+{
+    free(this_str->str);
+}
 
 
 #endif
