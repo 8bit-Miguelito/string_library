@@ -46,6 +46,7 @@ unsigned int length(string* s)
 {
     return s->length;
 }
+
 bool empty(string* s)
 {
     return s->length == 0;
@@ -80,9 +81,25 @@ bool c_equal(string* a, char* b)
 
 char at(string* s, const unsigned int idx)
 {
+    if (idx > s->length)
+    {
+        return '\0';
+    }
+
     return s->str[idx];
 }
 
+char replace(string* s, char a, unsigned int idx)
+{
+    if (idx > s->length)
+    {
+        return '\0';
+    }
+
+    char out = s->str[idx];
+    s->str[idx] = a;
+    return out;
+}
 char* get_string(string* s)
 {
     return s->str;
